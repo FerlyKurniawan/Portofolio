@@ -1,140 +1,253 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio Ferly</title>
-  <style>
-    * {
-      margin:0; padding:0; box-sizing:border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ferly Kurniawan | Portfolio</title>
+<link rel="icon" href="https://files.catbox.moe/23kuyv.jpg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    body {
-      min-height:100vh;
-      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-      padding:20px;
-    }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+section{scroll-snap-align:start}
+body{background:linear-gradient(135deg,#0e0e0e,#2a2a2a);color:#eaeaea;overflow-x:hidden}
+body.light{background:linear-gradient(135deg,#f2f2f2,#d9d9d9);color:#222}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}
+#loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#0e0e0e;display:flex;align-items:center;justify-content:center;z-index:9999;color:#7abaff;font-size:1.4rem;letter-spacing:3px}
+header{padding:20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:rgba(20,20,20,.45);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.15);box-shadow:0 8px 30px rgba(0,0,0,.35);z-index:100}
+body.light header{background:rgba(255,255,255,.65);border-bottom:1px solid rgba(0,0,0,.1)}
+.logo{font-weight:bold;letter-spacing:2px}
+.controls span{cursor:pointer;margin-left:10px;padding:6px 10px;border-radius:10px;background:rgba(255,255,255,.15);font-size:.75rem;transition:.3s}
+.controls span:hover{background:rgba(255,255,255,.3)}
+section{max-width:900px;margin:0 auto;padding:80px 25px;position:relative;z-index:1}
+.hero{text-align:center}
+.hero img{width:140px;height:140px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.25);margin-bottom:15px;transition:.3s}
+.hero img:hover{transform:scale(1.07);box-shadow:0 0 25px rgba(122,186,255,.8)}
+h1{font-size:2.2rem;margin-bottom:6px}
+.typing::after{content:"|";animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0}}
+.role{font-size:1rem;opacity:.85;margin-bottom:10px}
+.stars{margin-bottom:15px;color:gold;font-size:1.1rem}
+.bio{max-width:650px;margin:0 auto 25px;font-size:.95rem;line-height:1.6;opacity:.9}
+.section-title{text-align:center;font-size:1.1rem;letter-spacing:2px;margin-bottom:30px;text-transform:uppercase;opacity:.8}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{background:rgba(255,255,255,.07);padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.08);transition:.3s;transform-style:preserve-3d}
+.card:hover{box-shadow:0 0 20px rgba(122,186,255,.5)}
+.card i{font-size:1.6rem;margin-bottom:10px;color:#7abaff}
+.card h3{font-size:1rem;margin-bottom:6px}
+.card p{font-size:.8rem;opacity:.85;line-height:1.5}
+.projects a{display:inline-block;margin-top:8px;font-size:.8rem;color:#7abaff;text-decoration:none}
+.socials{display:flex;justify-content:center;gap:15px;margin-top:20px}
+.socials a{width:45px;height:45px;border-radius:50%;background:linear-gradient(135deg,#444,#222);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.3rem;transition:.3s;text-decoration:none}
+.socials a:hover{transform:translateY(-4px) scale(1.1);box-shadow:0 0 20px rgba(122,186,255,.7)}
+footer{text-align:center;padding:25px;font-size:.75rem;opacity:.6}
 
-    .card {
-      width:100%;
-      max-width:420px;
-      background: rgba(255,255,255,0.06);
-      padding:30px 25px;
-      border-radius:16px;
-      text-align:center;
-      box-shadow:0 0 30px rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-    }
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(50px) scale(.94);transition:.9s}
+.reveal.active{opacity:1;transform:translateY(0) scale(1)}
 
-    .avatar {
-      width:110px;
-      height:110px;
-      border-radius:50%;
-      object-fit:cover;
-      border:3px solid rgba(255,255,255,0.3);
-      margin-bottom:15px;
-    }
-
-    h1 {
-      font-size:1.8rem;
-      margin-bottom:5px;
-      letter-spacing:1px;
-    }
-
-    .role {
-      font-size:0.95rem;
-      opacity:0.8;
-      margin-bottom:15px;
-    }
-
-    .bio {
-      font-size:0.9rem;
-      line-height:1.5;
-      opacity:0.85;
-      margin-bottom:20px;
-    }
-
-    .skills {
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:8px;
-      margin-bottom:20px;
-    }
-
-    .skill {
-      padding:6px 12px;
-      background: rgba(255,255,255,0.1);
-      border-radius:20px;
-      font-size:0.75rem;
-    }
-
-    .links a {
-      display:block;
-      margin:8px 0;
-      padding:10px;
-      background:#3498db;
-      color:#fff;
-      text-decoration:none;
-      border-radius:10px;
-      transition:0.3s;
-    }
-
-    .links a:hover {
-      background:#2980b9;
-      transform: translateY(-2px);
-    }
-
-    footer {
-      margin-top:15px;
-      font-size:0.7rem;
-      opacity:0.5;
-    }
-  </style>
+/* CURSOR TRAIL */
+.trail{position:fixed;width:12px;height:12px;border-radius:50%;pointer-events:none;background:rgba(122,186,255,.6);z-index:9999}
+</style>
 </head>
+
 <body>
+<canvas id="particles"></canvas>
+<div id="loader">SEDANG MEMUAT DATA...</div>
 
-  <div class="card">
-
-    <!-- GANTI FOTO -->
-    <img src="https://files.catbox.moe/23kuyv.jpg" class="avatar" alt="FOTO PROFILE">
-
-    <!-- NAMA -->
-    <h1>Ferly Kurniawan</h1>
-    <div class="role">Telegram Bot Developer</div>
-
-    <!-- BIO -->
-    <div class="bio">
-      Saya membuat bot Telegram berbasis Pyrogram dan sistem otomatisasi.
-      Berpengalaman mengelola userbot, fitur absensi, note, autoforward, dan autogcast.
-    </div>
-
-    <!-- SKILL -->
-    <div class="skills">
-      <div class="skill">Python</div>
-      <div class="skill">Pyrogram</div>
-      <div class="skill">Telegram Bot</div>
-      <div class="skill">SQLite</div>
-      <div class="skill">Automation</div>
-    </div>
-
-    <!-- LINK -->
-    <div class="links">
-      <a href="https://t.me/StarBotDevs" target="_blank">Telegram</a>
-      <a href="https://github.com/FerlyKurniawan" target="_blank">GitHub</a>
-      <a href="mailto:ferlyk19@gmail.com">Email</a>
-    </div>
-
-    <footer>
-      © 2026 Ferly Kurniawan
-    </footer>
-
+<header>
+  <div class="logo">SᴛᴀʀXCᴏᴅᴇ</div>
+  <div class="controls">
+    <span onclick="toggleTheme()">🌓 Theme</span>
+    <span onclick="setLang('id')">🇮🇩 ID</span>
+    <span onclick="setLang('en')">🇬🇧 EN</span>
   </div>
+</header>
 
+<section class="hero reveal">
+  <img src="https://files.catbox.moe/23kuyv.jpg">
+  <h1 class="typing" id="typing-name"></h1>
+  <div class="role" id="role"></div>
+  <div class="stars">★★★★★</div>
+  <div class="bio" id="bio"></div>
+  <div class="socials">
+    <a href="https://t.me/StarBotDevs" target="_blank"><i class="fab fa-telegram"></i></a>
+    <a href="https://github.com/FerlyKurniawan" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="https://instagram.com/ferlyk19" target="_blank"><i class="fab fa-instagram"></i></a>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="section-title" id="services-title"></div>
+  <div class="grid">
+    <div class="card reveal"><i class="fas fa-robot"></i><h3 id="s1"></h3><p id="sd1"></p></div>
+    <div class="card reveal"><i class="fas fa-database"></i><h3 id="s2"></h3><p id="sd2"></p></div>
+    <div class="card reveal"><i class="fas fa-gears"></i><h3 id="s3"></h3><p id="sd3"></p></div>
+    <div class="card reveal"><i class="fas fa-cloud"></i><h3 id="s4"></h3><p id="sd4"></p></div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="section-title" id="projects-title"></div>
+  <div class="grid projects">
+    <div class="card reveal"><h3>🤖 StarXCodeBot</h3><p id="p1"></p>ᴍᴏᴅᴇʟ ʙᴏᴛ ➜ <a href="https://t.me/StarXCodeBot" target="_blank">◖sтαя ꭙ ꝛσʙσᴛ◗</a></div>
+    <div class="card reveal"><h3>⚙️ Ndablex Bot</h3><p id="p2"></p>ᴍᴏᴅᴇʟ ʙᴏᴛ ➜ <a href="https://t.me/ndablex_bot" target="_blank">𝐂𝐈𝐆𝐊𝐔 𝐁𝐎𝐓</a></div>
+    <div class="card reveal"><h3>🚀 StarFsubot</h3><p id="p3"></p>ᴍᴏᴅᴇʟ ʙᴏᴛ ➜ <a href="https://t.me/StarFsubot" target="_blank">sᴛᴀʀғsᴜʙ</a></div>
+  </div>
+</section>
+
+<footer>© 2026 Ferly Kurniawan</footer>
+
+<script>
+/* ===== LOADER ===== */
+window.onload=()=>{
+  setTimeout(()=>{
+    document.getElementById("loader").style.display="none";
+    typingLoop();
+  },2400);
+  initParticles();
+  setLang("id");
+};
+
+/* ===== THEME ===== */
+function toggleTheme(){document.body.classList.toggle("light");}
+
+/* ===== TYPING NAME LOOP PERFECT (±8s) ===== */
+const nameText = "Ferly Kurniawan";
+const nameEl = document.getElementById("typing-name");
+
+let i = 0;
+let direction = "forward"; // forward | backward
+
+function typingLoop() {
+  if (direction === "forward") {
+    nameEl.textContent = nameText.slice(0, i);
+    i++;
+
+    if (i > nameText.length) {
+      direction = "pauseFull";
+      setTimeout(typingLoop, 2000); // tahan di full name
+      return;
+    }
+  }
+
+  else if (direction === "backward") {
+    nameEl.textContent = nameText.slice(0, i);
+    i--;
+
+    if (i < 0) {
+      direction = "pauseEmpty";
+      setTimeout(typingLoop, 2000); // jeda sebelum ngetik ulang
+      return;
+    }
+  }
+
+  else if (direction === "pauseFull") {
+    direction = "backward";
+  }
+
+  else if (direction === "pauseEmpty") {
+    direction = "forward";
+  }
+
+  const speed = direction === "backward" ? 80 : 140;
+  setTimeout(typingLoop, speed);
+}
+
+/* ===== MULTI LANG ===== */
+const text={
+id:{
+role:"Telegram Bot Developer • Automation Enthusiast",
+bio:"Developer bot Telegram berbasis Python (Pyrogram). Fokus pada pembuatan userbot, sistem absensi multigrup, fitur note dengan tombol callback, autoforward, autogcast, serta integrasi database SQLite.",
+services:"Services",
+s1:"Pembuatan Userbot",sd1:"Membuat userbot Telegram custom sesuai kebutuhan fitur kamu.",
+s2:"Integrasi Database",sd2:"Sistem penyimpanan SQLite untuk note, absensi, dan otomasi.",
+s3:"Otomasi Telegram",sd3:"Autoforward, autogcast, auto tools, dan task scheduler.",
+s4:"Setup VPS",sd4:"Deploy bot ke VPS Linux + setup GitHub & auto restart.",
+projects:"Projects",
+p1:"Userbot Telegram dengan fitur otomasi, manajemen grup, note, callback button, dan autoforward.",
+p2:"Userbot multifungsi untuk kebutuhan harian Telegram.",
+p3:"Userbot khusus auto forward & broadcast dengan sistem database."
+},
+en:{
+role:"Telegram Bot Developer • Automation Enthusiast",
+bio:"Telegram bot developer using Python (Pyrogram). Focused on userbots, multi-group attendance systems, callback-based notes, autoforward, autogcast, and SQLite automation.",
+services:"Services",
+s1:"Userbot Development",sd1:"Custom Telegram userbot development based on your needs.",
+s2:"Database Integration",sd2:"SQLite-based storage system for notes, attendance, and automation.",
+s3:"Telegram Automation",sd3:"Autoforward, autogcast, auto tools, and task scheduler.",
+s4:"VPS Setup",sd4:"Deploy bot to Linux VPS + GitHub & auto restart setup.",
+projects:"Projects",
+p1:"Telegram userbot with automation, group management, notes, callback buttons, and autoforward.",
+p2:"Multi-purpose userbot for daily Telegram needs.",
+p3:"Userbot specialized in auto forward & broadcast with database system."
+}};
+
+function setLang(lang){
+  document.getElementById("role").innerText=text[lang].role;
+  document.getElementById("bio").innerText=text[lang].bio;
+  document.getElementById("services-title").innerText=text[lang].services;
+  document.getElementById("s1").innerText=text[lang].s1;
+  document.getElementById("sd1").innerText=text[lang].sd1;
+  document.getElementById("s2").innerText=text[lang].s2;
+  document.getElementById("sd2").innerText=text[lang].sd2;
+  document.getElementById("s3").innerText=text[lang].s3;
+  document.getElementById("sd3").innerText=text[lang].sd3;
+  document.getElementById("s4").innerText=text[lang].s4;
+  document.getElementById("sd4").innerText=text[lang].sd4;
+  document.getElementById("projects-title").innerText=text[lang].projects;
+  document.getElementById("p1").innerText=text[lang].p1;
+  document.getElementById("p2").innerText=text[lang].p2;
+  document.getElementById("p3").innerText=text[lang].p3;
+}
+
+/* ===== REVEAL ===== */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("active");});
+},{threshold:.15});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+/* ===== 3D TILT ===== */
+document.querySelectorAll(".card").forEach(card=>{
+  card.addEventListener("mousemove",e=>{
+    const r=card.getBoundingClientRect();
+    const x=e.clientX-r.left,y=e.clientY-r.top;
+    const cx=r.width/2,cy=r.height/2;
+    card.style.transform=`rotateX(${(y-cy)/18}deg) rotateY(${(cx-x)/18}deg) translateY(-6px)`;
+  });
+  card.addEventListener("mouseleave",()=>card.style.transform="rotateX(0) rotateY(0) translateY(0)");
+});
+
+/* ===== CURSOR TRAIL ===== */
+document.addEventListener("mousemove",e=>{
+  const t=document.createElement("div");
+  t.className="trail";
+  t.style.left=e.clientX+"px";
+  t.style.top=e.clientY+"px";
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),500);
+});
+
+/* ===== PARTICLES ===== */
+function initParticles(){
+const c=document.getElementById("particles");
+const ctx=c.getContext("2d");
+function resize(){c.width=innerWidth;c.height=innerHeight}
+resize();addEventListener("resize",resize);
+const p=Array.from({length:60},()=>({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-.5)*.6,vy:(Math.random()-.5)*.6,r:Math.random()*2+1}));
+(function draw(){
+ctx.clearRect(0,0,c.width,c.height);
+ctx.fillStyle="rgba(122,186,255,.7)";
+p.forEach(o=>{
+o.x+=o.vx;o.y+=o.vy;
+if(o.x<0||o.x>c.width)o.vx*=-1;
+if(o.y<0||o.y>c.height)o.vy*=-1;
+ctx.beginPath();ctx.arc(o.x,o.y,o.r,0,Math.PI*2);ctx.fill();
+});
+requestAnimationFrame(draw);
+})();
+}
+</script>
 </body>
 </html>
